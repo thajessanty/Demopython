@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+    {% if category %}
+        {{ category.description|truncatewords:155 }}
+    {% else %}
+        Welcome to Sanchi store where you can buy different products.
+    {% endif %}
+{% endblock %}
+{% block title %}
+    {% if category %}
+        {{ category.name }} - Sanchi store
+    {% else %}
+        See our new collection - Sanchi store
+    {% endif %}
+{% endblock %}
+{% block content %}
+{% if category %}
+    <div>
+        <div class="row my_row_class">
+            <div class="mx-auto">
+            <p><a href="{% url 'Sanchii:allProdCat' %}">Our product collections</a></p>
+        </div>
+            </div>
+    </div>
+{% endif %}
+<div class="mx_auto">
+    {% if category %}
+        <img class="my_image" src="{{ category.image.url }}" alt="{{ category.name }}" height="400" width="1650">
+    </div>
+    <br>
+    <div>
+        <h1 class="text-center my_title">{{ category.name }}</h1>
+        <p class="text-justify">{{ category.description }}</p>
+    </div>
+{% else %}
+    <div>
+        <img class="my_image my_image_padding" src="{% static 'img/banner4.png' %}" alt="Our product" width="1650" height="400">
+    </div>
+    <br>
+    <div>
+        <h1 class="text-center my-title">Our product collection</h1>
+        <p class="text-justify">"Welcome to our exquisite fashion emporium, where style and sophistication converge. Step into a world of endless possibilities as you explore our curated collection of stunning dresses and captivating fashion jewelry. Discover the perfect ensemble for any occasion, whether it's an elegant evening affair or a casual daytime outing. Indulge in the finest fabrics, intricate details, and exquisite craftsmanship that define our dresses. Enhance your look with our exquisite fashion jewelry, designed to add a touch of glamour and elevate your style. Immerse yourself in a shopping experience that celebrates individuality, beauty, and self-expression. Unleash your inner fashionista and unlock a world of limitless fashion possibilities at our e-commerce destination."</p>
+    </div>
+{% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9  col-sm-12  col-md-4 xol-lg-4">
+            <div class="card text-center" style="min-width:18rem;">
+                <a href="{{ product.get_url }}"><img class="card-img-top my_image" src="{{ product.image.url }}" alt="{{ product.name }}"></a>
+
+            <div class="card-body">
+                <h4>{{ product.name }}</h4>
+                <p>{{ product.price }}</p>
+            </div>
+        </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+{% endblock %}
