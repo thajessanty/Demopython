@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .home-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .register-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .home-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        {% if success_message %}
+            <p style="color: green;">{{ success_message }}</p>
+        {% endif %}
+        {% if message %}
+            <p style="color: red;">{{message}}</p>
+        {% endif %}
+
+
+
+
+        <form action="{% url 'collegeapp:login' %}" method="post">
+            {% csrf_token %}
+            <label >Username:</label>
+            <input type="text"  name="username" required>
+
+            <label>Password:</label>
+            <input type="password"  name="password" required>
+
+            <input type="submit" value="Login">
+
+            <div class="register-link">
+                <a href="{% url 'collegeapp:register' %}">Register Here</a>
+            </div>
+            <div class="home-link">
+                <a href="{% url 'collegeapp:demo' %}">Home Page</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
