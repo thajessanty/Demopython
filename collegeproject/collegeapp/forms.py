@@ -1,6 +1,5 @@
-import form as form
 from django import forms
-from django.forms import ModelForm
+from django.forms import ModelForm, DateInput, CheckboxSelectMultiple
 from collegeapp.models import Department,Course,Materials,MyModel,Teacher
 
 
@@ -9,6 +8,10 @@ class Order(forms.ModelForm):
     class Meta:
         model=MyModel
         fields="__all__"
+        widgets = {
+            'dob': DateInput(attrs={'type': 'date'}),
+            'materials_provided': CheckboxSelectMultiple(),
+        }
 
     def __init__(self, data=None, request=None, *args, **kwargs):
         super(Order, self).__init__(data=data, *args, **kwargs)
